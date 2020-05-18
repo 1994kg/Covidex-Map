@@ -2,6 +2,26 @@ import React, { Component } from 'react';
 import Customer from './components/Customer'
 //import info from './components/info'
 import './App.css';
+import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table'
+import TableHead from '@material-ui/core/TableHead';
+import TableBody from '@material-ui/core/TableBody';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+import { withStyles } from '@material-ui/core/styles';
+
+//https://material-ui.com/demos/tables/   material-ui에서 제공하는 공식 예제 
+
+const styles = theme => ({
+  root: {
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+    overflowX: "auto"
+  },
+  table: {
+    minWidth: 1080  //테이블은 무조건 1080px로 출력
+  }
+})
 
 const customers = [
   {
@@ -10,7 +30,7 @@ const customers = [
   'name': '박주현',
   'birthday': '940611',
   'gender': '남자',
-  'jobs': '대학생'
+  'job': '대학생'
   },
   {
     'id': 2,
@@ -18,7 +38,7 @@ const customers = [
     'name': '서은지',
     'birthday': '940417',
     'gender': '여자',
-    'jobs': '대학생'
+    'job': '디자이너'
   },
   {
     'id': 3,
@@ -26,19 +46,34 @@ const customers = [
     'name': '류지은',
     'birthday': '940526',
     'gender': '여자',
-    'jobs': '대학생'
+    'job': '프로그래머'
   }
 ]
 
 class App extends Component {
   render()  {
+    const { classes } = this.props;
     return (
-      <div>
-        {customers.map(c => {return (<Customer key={c.id}  //id를 키 값으로 설정
-        id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} jobs={c.jobs}/>);})}
-        </div>
+      <Paper className={classes.root}>
+      <Table className={classes.table}>
+        <TableHead>
+          <TableRow>
+            <TableCell>번호</TableCell>
+            <TableCell>이미지</TableCell>
+            <TableCell>이름</TableCell>
+            <TableCell>생년월일</TableCell>
+            <TableCell>성별</TableCell>
+            <TableCell>직업</TableCell>
+          </TableRow>
+        </TableHead>
+
+        <TableBody>
+          {customers.map(c => { return ( <Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job}/>);})}
+        </TableBody>
+      </Table>
+      </Paper>
     );
   }
 }
 
-export default App;
+export default withStyles(styles)(App);
